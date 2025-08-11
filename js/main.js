@@ -17,7 +17,6 @@ class EYantraApp {
         this.setupSmoothScrolling();
         this.initializeScrollAnimations();
         this.initializeLiveUpdates();
-        this.initializeRingAnimation();
         this.initializeStaggeredAnimations();
         this.initializeVisibilityAnimations();
     }
@@ -193,20 +192,6 @@ class EYantraApp {
         }
     }
 
-    // ===== RING ANIMATION ===== //
-    initializeRingAnimation() {
-        const ringElement = document.querySelector('.ring-animation');
-        if (ringElement) {
-            setInterval(() => {
-                ringElement.style.animation = 'none';
-                ringElement.offsetHeight;
-                setTimeout(() => {
-                    ringElement.style.animation = 'ringPulse 4s ease-out';
-                }, 50);
-            }, 8000);
-        }
-    }
-
     // ===== SMOOTH SCROLLING ===== //
     setupSmoothScrolling() {
         const anchorLinks = document.querySelectorAll('a[href^="#"]');
@@ -260,6 +245,20 @@ class EYantraApp {
                 this.toggleMobileMenu();
             });
         }
+
+        // Handle dropdown clicks on mobile
+        const dropdowns = document.querySelectorAll('.dropdown');
+        dropdowns.forEach(dropdown => {
+            const toggle = dropdown.querySelector('.dropdown-toggle');
+            if (toggle) {
+                toggle.addEventListener('click', (e) => {
+                    if (window.innerWidth <= 767) {
+                        e.preventDefault();
+                        dropdown.classList.toggle('active');
+                    }
+                });
+            }
+        });
     }
 
     toggleMobileMenu() {
