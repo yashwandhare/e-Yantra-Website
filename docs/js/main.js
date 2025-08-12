@@ -3,6 +3,7 @@
 class EYantraApp {
     constructor() {
         this.isMenuOpen = false;
+        this.isLoginModalOpen = false;
         this.lastScrollY = 0;
         this.ticking = false;
         this.scrollDirection = 'up';
@@ -19,6 +20,8 @@ class EYantraApp {
         this.initializeLiveUpdates();
         this.initializeStaggeredAnimations();
         this.initializeVisibilityAnimations();
+        this.initializeLoginModal();
+        this.initializeAboutUsButton();
     }
 
     // ===== EVENT LISTENERS ===== //
@@ -27,6 +30,230 @@ class EYantraApp {
         window.addEventListener('resize', this.handleResize.bind(this), { passive: true });
         document.addEventListener('click', this.handleDocumentClick.bind(this));
         document.addEventListener('keydown', this.handleKeydown.bind(this));
+    }
+
+    // ===== LOGIN MODAL FUNCTIONALITY ===== //
+    initializeLoginModal() {
+        const loginBtn = document.getElementById('loginBtn');
+        const modal = document.getElementById('loginModal');
+        const modalClose = document.getElementById('modalClose');
+        const loginForm = document.getElementById('loginForm');
+        const passwordToggle = document.getElementById('passwordToggle');
+        const passwordInput = document.getElementById('password');
+        const forgotPasswordLink = document.getElementById('forgotPassword');
+
+        if (loginBtn && modal) {
+            loginBtn.addEventListener('click', (e) => {
+                e.preventDefault();
+                this.showLoginModal();
+            });
+        }
+
+        if (modalClose) {
+            modalClose.addEventListener('click', () => {
+                this.hideLoginModal();
+            });
+        }
+
+        if (modal) {
+            modal.addEventListener('click', (e) => {
+                if (e.target === modal) {
+                    this.hideLoginModal();
+                }
+            });
+        }
+
+        if (passwordToggle && passwordInput) {
+            passwordToggle.addEventListener('click', () => {
+                const type = passwordInput.getAttribute('type') === 'password' ? 'text' : 'password';
+                passwordInput.setAttribute('type', type);
+                
+                const icon = passwordToggle.querySelector('i');
+                if (type === 'text') {
+                    icon.className = 'fas fa-eye-slash';
+                } else {
+                    icon.className = 'fas fa-eye';
+                }
+            });
+        }
+
+        if (loginForm) {
+            loginForm.addEventListener('submit', (e) => {
+                e.preventDefault();
+                this.handleLogin();
+            });
+        }
+
+        if (forgotPasswordLink) {
+            forgotPasswordLink.addEventListener('click', (e) => {
+                e.preventDefault();
+                this.handleForgotPassword();
+            });
+        }
+    }
+
+    showLoginModal() {
+        const modal = document.getElementById('loginModal');
+        if (modal) {
+            this.isLoginModalOpen = true;
+            modal.classList.add('active');
+            document.body.style.overflow = 'hidden';
+            
+            // Focus trap
+            const firstInput = modal.querySelector('#username');
+            if (firstInput) {
+                setTimeout(() => firstInput.focus(), 200);
+            }
+        }
+    }
+
+    hideLoginModal() {
+        const modal = document.getElementById('loginModal');
+        if (modal) {
+            this.isLoginModalOpen = false;
+            modal.classList.remove('active');
+            document.body.style.overflow = '';
+            
+            // Reset form
+            const form = document.getElementById('loginForm');
+            if (form) {
+                form.reset();
+            }
+            
+            // Reset loading state
+            const submitBtn = document.getElementById('loginSubmit');
+            if (submitBtn) {
+                submitBtn.classList.remove('loading');
+            }
+        }
+    }
+
+    async handleLogin() {
+        const form = document.getElementById('loginForm');
+        const submitBtn = document.getElementById('loginSubmit');
+        const usernameInput = document.getElementById('username');
+        const passwordInput = document.getElementById('password');
+
+        if (!form || !submitBtn || !usernameInput || !passwordInput) return;
+
+        const username = usernameInput.value.trim();
+        const password = passwordInput.value;
+
+        if (!username || !password) {
+            this.showNotification('Please fill in all fields', 'error');
+            return;
+        }
+
+        // Show loading state
+        submitBtn.classList.add('loading');
+
+        try {
+            // Simulate API call - replace with actual backend call
+            const response = await fetch('/api/auth/login', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ username, password })
+            });
+
+            const data = await response.json();
+
+            if (response.ok) {
+                this.showNotification('Login successful!', 'success');
+                
+                // Store auth token
+                localStorage.setItem('authToken', data.token);
+                
+                // Redirect based on user role
+                setTimeout(() => {
+                    if (data.user.role === 'admin') {
+                        window.location.href = '/admin/dashboard';
+                    } else {
+                        window.location.href = '/dashboard';
+                    }
+                }, 1000);
+            } else {
+                this.showNotification(data.message || 'Login failed', 'error');
+            }
+        } catch (error) {
+            console.error('Login error:', error);
+            this.showNotification('Connection error. Please try again.', 'error');
+        } finally {
+            submitBtn.classList.remove('loading');
+        }
+    }
+
+    handleForgotPassword() {
+        this.showNotification('Please contact admin for password reset', 'info');
+    }
+
+    showNotification(message, type = 'info') {
+        // Create notification element
+        const notification = document.createElement('div');
+        notification.className = `notification notification-${type}`;
+        notification.innerHTML = `
+            <i class="fas ${type === 'success' ? 'fa-check-circle' : type === 'error' ? 'fa-exclamation-circle' : 'fa-info-circle'}"></i>
+            <span>${message}</span>
+        `;
+
+        // Add styles if not already added
+        if (!document.querySelector('#notification-styles')) {
+            const styles = document.createElement('style');
+            styles.id = 'notification-styles';
+            styles.textContent = `
+                .notification {
+                    position: fixed;
+                    top: 20px;
+                    right: 20px;
+                    background: rgba(255, 255, 255, 0.95);
+                    backdrop-filter: blur(10px);
+                    border-radius: 12px;
+                    padding: 1rem 1.5rem;
+                    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.12);
+                    z-index: 3000;
+                    display: flex;
+                    align-items: center;
+                    gap: 0.75rem;
+                    transform: translateX(100%);
+                    transition: transform 0.3s ease;
+                    max-width: 300px;
+                    font-size: 0.9rem;
+                }
+                .notification.show { transform: translateX(0); }
+                .notification-success { border-left: 4px solid #10b981; color: #065f46; }
+                .notification-error { border-left: 4px solid #ef4444; color: #7f1d1d; }
+                .notification-info { border-left: 4px solid #3b82f6; color: #1e40af; }
+            `;
+            document.head.appendChild(styles);
+        }
+
+        document.body.appendChild(notification);
+        
+        // Show notification
+        setTimeout(() => notification.classList.add('show'), 100);
+        
+        // Hide and remove notification
+        setTimeout(() => {
+            notification.classList.remove('show');
+            setTimeout(() => notification.remove(), 300);
+        }, 3000);
+    }
+
+    // ===== ABOUT US BUTTON FUNCTIONALITY ===== //
+    initializeAboutUsButton() {
+        const aboutUsBtn = document.getElementById('aboutUsBtn');
+        if (aboutUsBtn) {
+            aboutUsBtn.addEventListener('click', () => {
+                const aboutSection = document.getElementById('about');
+                if (aboutSection) {
+                    aboutSection.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        }
     }
 
     // ===== VISIBILITY ANIMATIONS ===== //
@@ -41,12 +268,10 @@ class EYantraApp {
                 if (entry.isIntersecting && !this.animatedElements.has(entry.target)) {
                     this.animatedElements.add(entry.target);
                     
-                    // Add staggered delay based on grid position
                     const container = entry.target.parentNode;
                     const cards = Array.from(container.children);
                     const index = cards.indexOf(entry.target);
                     
-                    // Reset and animate
                     entry.target.style.opacity = '0';
                     entry.target.style.transform = 'translateY(40px) scale(0.9)';
                     
@@ -55,16 +280,14 @@ class EYantraApp {
                         entry.target.style.opacity = '1';
                         entry.target.style.transform = 'translateY(0) scale(1)';
                         
-                        // Add entrance class for additional effects
                         entry.target.classList.add('card-visible');
-                    }, index * 150); // 150ms stagger
+                    }, index * 150);
                     
                     visibilityObserver.unobserve(entry.target);
                 }
             });
         }, observerOptions);
 
-        // Observe all cards
         document.querySelectorAll('.activity-card, .project-card').forEach(card => {
             visibilityObserver.observe(card);
         });
@@ -72,7 +295,6 @@ class EYantraApp {
 
     // ===== STAGGERED ANIMATIONS ===== //
     initializeStaggeredAnimations() {
-        // Add CSS class for cards that are visible
         const style = document.createElement('style');
         style.textContent = `
             .card-visible {
@@ -89,10 +311,8 @@ class EYantraApp {
 
     // ===== SCROLL ANIMATIONS ===== //
     initializeScrollAnimations() {
-        // Initial state - cards are visible by default
         const cards = document.querySelectorAll('.activity-card, .project-card');
         cards.forEach(card => {
-            // Cards start visible, will be animated on intersection
             card.style.opacity = '1';
             card.style.transform = 'translateY(0) scale(1)';
         });
@@ -246,7 +466,6 @@ class EYantraApp {
             });
         }
 
-        // Handle dropdown clicks on mobile
         const dropdowns = document.querySelectorAll('.dropdown');
         dropdowns.forEach(dropdown => {
             const toggle = dropdown.querySelector('.dropdown-toggle');
@@ -288,7 +507,6 @@ class EYantraApp {
 
     // ===== SCROLL EFFECTS ===== //
     initializeScrollEffects() {
-        // Cards are visible by default now
         const fadeElements = document.querySelectorAll('.activity-card, .project-card');
         fadeElements.forEach((element) => {
             element.style.opacity = '1';
@@ -297,7 +515,6 @@ class EYantraApp {
     }
 
     animateOnScroll() {
-        // This method now handles continuous scroll effects
         const elements = document.querySelectorAll('.section-header');
         const windowHeight = window.innerHeight;
 
@@ -332,8 +549,12 @@ class EYantraApp {
     }
 
     handleKeydown(e) {
-        if (e.key === 'Escape' && this.isMenuOpen) {
-            this.closeMobileMenu();
+        if (e.key === 'Escape') {
+            if (this.isLoginModalOpen) {
+                this.hideLoginModal();
+            } else if (this.isMenuOpen) {
+                this.closeMobileMenu();
+            }
         }
     }
 }

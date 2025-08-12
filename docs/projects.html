@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Projects - SVPC e-Yantra Club</title>
+    
+    <!-- Meta Tags -->
+    <meta name="description" content="Browse all projects by SVPCET Nagpur's e-Yantra Club - Working and Completed projects in robotics, AI, and embedded systems.">
+    
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- CSS -->
+    <link rel="stylesheet" href="css/main.css">
+    <link rel="stylesheet" href="css/projects.css">
+</head>
+<body>
+    <!-- Navigation Tab Bar -->
+    <header class="top-bar show" id="navbar">
+        <div class="nav-container">
+            <!-- Left: Back Button -->
+            <div class="nav-left">
+                <div class="logo back-btn" id="backBtn">
+                    <i class="fas fa-arrow-left"></i>
+                    <span>SVPC e-Yantra</span>
+                </div>
+            </div>
+            
+            <!-- Center: Tab Menu -->
+            <nav class="tab-menu" id="tabMenu">
+                <div class="tab-links">
+                    <div class="dropdown sort-dropdown">
+                        <button class="sort-btn dropdown-toggle" id="sortBtn">
+                            <i class="fas fa-filter"></i>
+                            <span>All Projects</span>
+                            <i class="fas fa-chevron-down"></i>
+                        </button>
+                        <ul class="dropdown-menu sort-menu">
+                            <li><a href="#" data-filter="all" class="sort-option active">All Projects</a></li>
+                            <li><a href="#" data-filter="working" class="sort-option">Working</a></li>
+                            <li><a href="#" data-filter="completed" class="sort-option">Completed</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </nav>
+            
+            <!-- Right: Login Button -->
+           <!-- Updated Login Button HTML -->
+            <button class="nav-link login-btn" id="loginBtn">
+                 <i class="fas fa-user login-icon"></i>
+                <span class="login-text">Login</span>
+            </button>
+
+        </div>
+    </header>
+    
+
+    <!-- Main Content -->
+    <main class="projects-main">
+        <!-- Page Header with Background Image -->
+        <section class="projects-header">
+            <!-- Background Image -->
+            <div class="projects-hero-bg">
+                <img src="images/projects-bg.jpg" alt="Projects Background">
+            </div>
+            
+            <!-- Header Content -->
+            <div class="container">
+                <div class="header-content">
+                    <h1>Our Projects</h1>
+                    <p>Explore our innovative solutions in robotics, AI, and embedded systems</p>
+                    <div class="projects-stats">
+                        <div class="stat-item">
+                            <span class="stat-number" id="totalProjects">3</span>
+                            <span class="stat-label">Total Projects</span>
+                        </div>
+                        <div class="stat-item">
+                            <span class="stat-number" id="workingProjects">2</span>
+                            <span class="stat-label">In Progress</span>
+                        </div>
+                        <div class="stat-item">
+                            <span class="stat-number" id="completedProjects">1</span>
+                            <span class="stat-label">Completed</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Projects Grid -->
+        <section class="projects-section">
+            <div class="container">
+                <!-- Loading State -->
+                <div class="loading-state" id="loadingState">
+                    <div class="loading-spinner"></div>
+                    <p>Loading projects...</p>
+                </div>
+
+                <!-- Projects Grid -->
+                <div class="projects-grid" id="projectsGrid">
+                    <!-- Working Projects -->
+                    <div class="project-card" data-status="working">
+                        <div class="project-image">
+                            <img src="images/projects/autonomous-robot.jpg" alt="Autonomous Navigation Robot" loading="lazy">
+                            <div class="project-overlay">
+                                <button class="btn btn-small">View Details</button>
+                            </div>
+                            <div class="project-status working">
+                                <i class="fas fa-cog fa-spin"></i>
+                                <span>In Progress</span>
+                            </div>
+                        </div>
+                        <div class="project-content">
+                            <h3>Autonomous Navigation Robot</h3>
+                            <p>Smart robot capable of autonomous navigation using computer vision and sensor fusion for indoor environments.</p>
+                            <div class="project-meta">
+                                <div class="project-tags">
+                                    <span class="tag">Computer Vision</span>
+                                    <span class="tag">Arduino</span>
+                                    <span class="tag">ROS</span>
+                                </div>
+                                <div class="project-date">Started: Jan 2024</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="project-card" data-status="completed">
+                        <div class="project-image">
+                            <img src="images/projects/iot-system.jpg" alt="Smart Campus IoT System" loading="lazy">
+                            <div class="project-overlay">
+                                <button class="btn btn-small">View Details</button>
+                            </div>
+                            <div class="project-status completed">
+                                <i class="fas fa-check-circle"></i>
+                                <span>Completed</span>
+                            </div>
+                        </div>
+                        <div class="project-content">
+                            <h3>Smart Campus IoT System</h3>
+                            <p>Comprehensive IoT solution for monitoring and controlling campus facilities with real-time analytics.</p>
+                            <div class="project-meta">
+                                <div class="project-tags">
+                                    <span class="tag">IoT</span>
+                                    <span class="tag">Sensors</span>
+                                    <span class="tag">Cloud</span>
+                                </div>
+                                <div class="project-date">Completed: Dec 2023</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="project-card" data-status="working">
+                        <div class="project-image">
+                            <img src="images/projects/drone-project.jpg" alt="Agricultural Drone System" loading="lazy">
+                            <div class="project-overlay">
+                                <button class="btn btn-small">View Details</button>
+                            </div>
+                            <div class="project-status working">
+                                <i class="fas fa-cog fa-spin"></i>
+                                <span>In Progress</span>
+                            </div>
+                        </div>
+                        <div class="project-content">
+                            <h3>Agricultural Drone System</h3>
+                            <p>Automated drone for precision agriculture and crop monitoring with AI-powered analysis.</p>
+                            <div class="project-meta">
+                                <div class="project-tags">
+                                    <span class="tag">Drones</span>
+                                    <span class="tag">Agriculture</span>
+                                    <span class="tag">AI</span>
+                                </div>
+                                <div class="project-date">Started: Mar 2024</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- No Results State -->
+                <div class="no-results" id="noResults" style="display: none;">
+                    <div class="no-results-content">
+                        <i class="fas fa-search"></i>
+                        <h3>No projects found</h3>
+                        <p>Try adjusting your filter to see more projects.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Login Modal -->
+    <div class="modal-overlay" id="loginModal">
+        <div class="modal-container">
+            <div class="modal-card">
+                <div class="modal-header">
+                    <h2>Member Login</h2>
+                    <button class="modal-close" id="modalClose" aria-label="Close">
+                        <i class="fas fa-times"></i>
+                    </button>
+                </div>
+                <div class="modal-content">
+                    <form class="login-form" id="loginForm">
+                        <div class="form-group">
+                            <label for="username">Username</label>
+                            <input type="text" id="username" name="username" required autocomplete="username" placeholder="Enter your username">
+                            <i class="fas fa-user input-icon"></i>
+                        </div>
+                        <div class="form-group">
+                            <label for="password">Password</label>
+                            <input type="password" id="password" name="password" required autocomplete="current-password" placeholder="Enter your password">
+                            <i class="fas fa-lock input-icon"></i>
+                            <button type="button" class="password-toggle" id="passwordToggle">
+                                <i class="fas fa-eye"></i>
+                            </button>
+                        </div>
+                        <div class="form-actions">
+                            <button type="submit" class="btn btn-primary login-submit-btn" id="loginSubmit">
+                                <span>Login</span>
+                                <i class="fas fa-spinner loading-icon"></i>
+                            </button>
+                        </div>
+                        <div class="form-footer">
+                            <a href="#" class="forgot-password" id="forgotPassword">Forgot Password?</a>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-top">
+                <div class="footer-logo">
+                    <i class="fas fa-robot"></i>
+                    SVPC e-Yantra
+                </div>
+            </div>
+            
+            <div class="footer-content">
+                <div class="footer-left">
+                    <div class="quick-links">
+                        <h4>Quick Links</h4>
+                        <ul>
+                            <li><a href="index.html">Home</a></li>
+                            <li><a href="index.html#about">About</a></li>
+                            <li><a href="projects.html">Projects</a></li>
+                            <li><a href="index.html#events">Events</a></li>
+                            <li><a href="index.html#gallery">Gallery</a></li>
+                            <li><a href="index.html#contact">Contact</a></li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <div class="footer-right">
+                    <div class="contact-section">
+                        <h4>Connect With Us</h4>
+                        <div class="contact-info">
+                            <p><span>eyantra@svpcet.ac.in</span><i class="fas fa-envelope"></i></p>
+                            <p><span>SVPCET, Nagpur, Maharashtra</span><i class="fas fa-map-marker-alt"></i></p>
+                        </div>
+                        <div class="social-links">
+                            <a href="#" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+                            <a href="#" aria-label="LinkedIn"><i class="fab fa-linkedin"></i></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="footer-bottom">
+                <p>&copy; 2024 SVPC e-Yantra Club. All rights reserved.</p>
+                <p>Made with ❤️ by E-Yantra Team</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="js/main.js"></script>
+    <script src="js/projects.js"></script>
+</body>
+</html>

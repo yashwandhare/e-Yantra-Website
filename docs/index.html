@@ -21,7 +21,7 @@
 </head>
 <body>
     <!-- Navigation -->
-    <header class="top-bar" id="navbar">
+    <header class="top-bar show" id="navbar">
         <div class="nav-container">
             <div class="logo">
                 <i class="fas fa-robot"></i>
@@ -32,7 +32,7 @@
                 <ul class="nav-links">
                     <li><a href="#home" class="nav-link">Home</a></li>
                     <li><a href="#about" class="nav-link">What We Do</a></li>
-                    <li><a href="#projects" class="nav-link">Projects</a></li>
+                    <li><a href="projects.html" class="nav-link">Projects</a></li>
                     <li class="dropdown">
                         <a href="#live" class="nav-link dropdown-toggle">
                             Live <i class="fas fa-chevron-down"></i>
@@ -44,7 +44,7 @@
                         </ul>
                     </li>
                     <li><a href="#contact" class="nav-link">Contact</a></li>
-                    <li><a href="login.html" class="nav-link login-btn">Login</a></li>
+                    <li><a href="#" class="nav-link login-btn" id="loginBtn">Login</a></li>
                 </ul>
             </nav>
             
@@ -66,10 +66,10 @@
                 <h1>Innovating Minds, Building the Future</h1>
                 <p>Welcome to SVPCET Nagpur's e-Yantra Club — a hub for robotics, AI, and embedded systems enthusiasts. We foster technical skills, teamwork, and innovation through projects, competitions, and the prestigious e-Yantra Robotics Competition (eYRC) by IIT Bombay.</p>
                 <div class="hero-buttons">
-                    <button class="btn btn-primary join-us-btn">
-                        Join Our Club
+                    <button class="btn btn-primary about-us-btn" id="aboutUsBtn">
+                        About Us
                     </button>
-                    <button class="btn btn-secondary">View Projects</button>
+                    <button class="btn btn-secondary" onclick="document.getElementById('projects').scrollIntoView({behavior: 'smooth'})">View Projects</button>
                 </div>
             </div>
         </div>
@@ -247,7 +247,7 @@
                         <ul>
                             <li><a href="#home">Home</a></li>
                             <li><a href="#about">About</a></li>
-                            <li><a href="#projects">Projects</a></li>
+                            <li><a href="projects.html">Projects</a></li>
                             <li><a href="#events">Events</a></li>
                             <li><a href="#gallery">Gallery</a></li>
                             <li><a href="#contact">Contact</a></li>
@@ -276,6 +276,46 @@
             </div>
         </div>
     </footer>
+
+    <!-- Login Modal -->
+    <div class="modal-overlay" id="loginModal">
+        <div class="modal-container">
+            <div class="modal-card">
+                <div class="modal-header">
+                    <h2>Member Login</h2>
+                    <button class="modal-close" id="modalClose" aria-label="Close">
+                        <i class="fas fa-times"></i>
+                    </button>
+                </div>
+                <div class="modal-content">
+                    <form class="login-form" id="loginForm">
+                        <div class="form-group">
+                            <label for="username">Username</label>
+                            <input type="text" id="username" name="username" required autocomplete="username" placeholder="Enter your username">
+                            <i class="fas fa-user input-icon"></i>
+                        </div>
+                        <div class="form-group">
+                            <label for="password">Password</label>
+                            <input type="password" id="password" name="password" required autocomplete="current-password" placeholder="Enter your password">
+                            <i class="fas fa-lock input-icon"></i>
+                            <button type="button" class="password-toggle" id="passwordToggle">
+                                <i class="fas fa-eye"></i>
+                            </button>
+                        </div>
+                        <div class="form-actions">
+                            <button type="submit" class="btn btn-primary login-submit-btn" id="loginSubmit">
+                                <span>Login</span>
+                                <i class="fas fa-spinner loading-icon"></i>
+                            </button>
+                        </div>
+                        <div class="form-footer">
+                            <a href="#" class="forgot-password" id="forgotPassword">Forgot Password?</a>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
 
     <script src="js/main.js"></script>
 </body>
