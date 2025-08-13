@@ -1659,9 +1659,7 @@ a,
 
 /* ===== PERFORMANCE OPTIMIZATIONS ===== */
 /* Optimize font loading */
-@font-face {
-    font-display: swap;
-}
+/* Removed incomplete @font-face rule to satisfy linter */
 
 /* Remove will-change after animation completes */
 .activity-card,
