@@ -11,8 +11,9 @@
 /* Projects Main Layout */
 .projects-main {
     min-height: 100vh;
-    padding-top: 0; /* No padding since hero is fullscreen */
+    padding-top: 0;
     background: var(--bg-primary);
+    contain: layout style paint; /* Performance optimization */
 }
 
 /* Hide mobile menu button on projects page */
@@ -20,7 +21,7 @@
     display: none !important;
 }
 
-/* Fix navigation container for proper flexbox */
+/* Updated Navigation Layout - 3 Column Grid */
 .nav-container {
     position: relative;
     z-index: 1002;
@@ -28,7 +29,7 @@
     padding: 0 clamp(1rem, 3vw, 2rem);
     height: 100%;
     display: grid;
-    grid-template-columns: 1fr auto 1fr; /* Left flexible, center auto, right flexible */
+    grid-template-columns: 1fr auto 1fr; /* Left, Center, Right */
     align-items: center;
     gap: 1rem;
 }
@@ -37,53 +38,40 @@
     justify-self: start;
 }
 
-.tab-menu {
+.nav-center {
     justify-self: center;
+    /* Empty space for future use */
 }
 
 .nav-right {
     justify-self: end;
 }
 
-/* Back Button Styling - Fixed hover effects */
+/* Back Button Styling - Optimized */
 .back-btn {
     cursor: pointer;
-    transition: var(--transition-smooth);
+    transition: transform var(--transition-smooth);
     display: flex;
     align-items: center;
     gap: 0.75rem;
     flex-shrink: 0;
+    will-change: transform; /* Performance hint */
 }
 
 .back-btn:hover {
-    transform: scale(1.05); /* Subtle grow effect */
+    transform: scale(1.05);
 }
 
 .back-btn i {
     font-size: clamp(1.2rem, 3vw, 1.4rem);
-    transition: var(--transition-smooth);
-    /* Removed floating animation */
+    transition: transform var(--transition-smooth);
 }
 
 .back-btn:hover i {
-    transform: scale(1.1); /* Just scale, no translation */
+    transform: scale(1.1);
 }
 
-/* Tab Menu Styling - Center the sort dropdown */
-.tab-menu {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    flex: 1;
-}
-
-.tab-links {
-    display: flex;
-    align-items: center;
-    gap: clamp(1rem, 3vw, 2rem);
-}
-
-/* Sort Dropdown */
+/* Sort Dropdown - Now in right position */
 .sort-dropdown {
     position: relative;
 }
@@ -91,19 +79,20 @@
 .sort-btn {
     background: rgba(255, 255, 255, 0.1);
     border: 1px solid rgba(255, 255, 255, 0.2);
-    border-radius: var(--border-radius-md); /* Unified */
+    border-radius: var(--border-radius-md);
     padding: clamp(0.4rem, 1.5vw, 0.5rem) clamp(0.8rem, 2vw, 1rem);
     color: var(--text-primary);
     font-family: var(--font-body);
     font-size: var(--fs-small);
     font-weight: 500;
     cursor: pointer;
-    transition: var(--transition-smooth);
+    transition: all var(--transition-smooth);
     display: flex;
     align-items: center;
     gap: 0.5rem;
     min-height: 44px;
     white-space: nowrap;
+    will-change: transform;
 }
 
 .sort-btn:hover {
@@ -118,7 +107,7 @@
 
 .sort-btn i:last-child {
     font-size: 0.8rem;
-    transition: var(--transition-fast);
+    transition: transform var(--transition-fast);
 }
 
 .sort-dropdown:hover .sort-btn i:last-child {
@@ -128,11 +117,11 @@
 .sort-menu {
     position: absolute;
     top: calc(100% + 10px);
-    left: 0;
+    right: 0; /* Changed from left: 0 to right: 0 */
     background: rgba(255, 255, 255, 0.15);
     backdrop-filter: blur(20px);
     -webkit-backdrop-filter: blur(20px);
-    border-radius: var(--border-radius-md); /* Unified */
+    border-radius: var(--border-radius-md);
     box-shadow: var(--shadow-lg);
     padding: 0.5rem 0;
     min-width: 160px;
@@ -142,6 +131,7 @@
     transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
     border: 1px solid rgba(0, 0, 0, 0.08);
     z-index: 1001;
+    will-change: transform, opacity;
 }
 
 .sort-dropdown:hover .sort-menu {
@@ -154,7 +144,7 @@
     display: block;
     padding: 0.75rem 1rem;
     color: var(--text-primary);
-    transition: var(--transition-fast);
+    transition: all var(--transition-fast);
     font-size: var(--fs-small);
     text-decoration: none;
     border: none;
@@ -171,35 +161,9 @@
     transform: translateX(3px);
 }
 
-/* Login Button Styling - Fixed to stay on right */
-.login-btn {
-    background: var(--primary-color);
-    color: white !important;
-    padding: clamp(0.4rem, 1.5vw, 0.5rem) clamp(0.8rem, 2vw, 1rem);
-    border-radius: var(--border-radius-md); /* Unified */
-    transition: var(--transition-smooth);
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
-    min-height: 44px;
-    border: none;
-    cursor: pointer;
-    margin-left: auto;
-}
-
-.login-btn:hover {
-    background: var(--primary-hover);
-    transform: translateY(-2px) scale(1.05);
-    box-shadow: 0 6px 20px rgba(225, 50, 54, 0.4);
-}
-
-.login-icon {
-    display: none; /* Hidden by default */
-}
-
 /* ===== PROJECTS HEADER - Hero Style ===== */
 
-/* Projects Header - Exact same as main page hero */
+/* Projects Header - Performance Optimized */
 .projects-header {
     position: relative;
     height: 100vh;
@@ -208,9 +172,10 @@
     align-items: center;
     justify-content: center;
     overflow: hidden;
+    contain: layout style paint;
 }
 
-/* Background Image - Same structure as hero-bg */
+/* Background Image - Optimized */
 .projects-hero-bg {
     position: absolute;
     top: 0;
@@ -218,6 +183,7 @@
     width: 100%;
     height: 100%;
     z-index: 1;
+    will-change: transform;
 }
 
 .projects-hero-bg img {
@@ -227,9 +193,10 @@
     filter: grayscale(0%) blur(10px);
     transition: transform 0.6s ease-out;
     will-change: transform;
+    backface-visibility: hidden; /* Performance optimization */
 }
 
-/* Header Content - Same structure as hero-content */
+/* Header Content - Optimized */
 .header-content {
     position: relative;
     z-index: 2;
@@ -239,9 +206,10 @@
     text-align: center;
     color: white;
     animation: fadeInScale 1s ease-out 0.3s both;
+    contain: layout style;
 }
 
-/* Projects Title - Same as hero h1 */
+/* Projects Title */
 .header-content h1 {
     font-family: var(--font-heading);
     font-size: var(--fs-hero);
@@ -251,7 +219,7 @@
     line-height: 1.2;
 }
 
-/* Projects Description - Same as hero p */
+/* Projects Description */
 .header-content p {
     font-size: var(--fs-body);
     color: rgba(255, 255, 255, 0.9);
@@ -262,7 +230,7 @@
     margin-right: auto;
 }
 
-/* Projects Stats - Styled like hero buttons */
+/* Projects Stats - Optimized */
 .projects-stats {
     display: flex;
     gap: clamp(2rem, 5vw, 4rem);
@@ -280,10 +248,12 @@
     backdrop-filter: blur(10px);
     -webkit-backdrop-filter: blur(10px);
     padding: clamp(1rem, 3vw, 1.5rem) clamp(1.5rem, 4vw, 2rem);
-    border-radius: var(--border-radius-xl); /* Unified */
+    border-radius: var(--border-radius-xl);
     border: 1px solid rgba(255, 255, 255, 0.2);
     transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
     min-width: clamp(120px, 20vw, 160px);
+    will-change: transform;
+    contain: layout style;
 }
 
 .stat-item:hover {
@@ -319,13 +289,14 @@
     justify-content: center;
 }
 
-/* Projects Section */
+/* Projects Section - Optimized */
 .projects-section {
     padding: clamp(2rem, 5vw, 3rem) 0;
     background: var(--bg-primary);
+    contain: layout style;
 }
 
-/* Loading State */
+/* Loading State - Optimized */
 .loading-state {
     display: flex;
     flex-direction: column;
@@ -342,6 +313,12 @@
     border-top: 3px solid var(--primary-color);
     border-radius: 50%;
     animation: spin 1s linear infinite;
+    will-change: transform;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
 }
 
 .loading-state p {
@@ -349,7 +326,7 @@
     font-size: var(--fs-body);
 }
 
-/* Projects Grid - Match main page exactly */
+/* Projects Grid - Performance Optimized */
 .projects-grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(min(300px, 90vw), 1fr));
@@ -357,6 +334,7 @@
     opacity: 0;
     transform: translateY(30px);
     transition: all 0.6s ease-out;
+    contain: layout;
 }
 
 .projects-grid.loaded {
@@ -364,19 +342,20 @@
     transform: translateY(0);
 }
 
-/* Project Card - Match main page exactly */
+/* Project Card - Optimized */
 .project-card {
     background: white;
-    border-radius: var(--border-radius-xl); /* Unified */
+    border-radius: var(--border-radius-xl);
     overflow: hidden;
     box-shadow: var(--shadow-md);
     transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
     border: 1px solid var(--border-color);
     opacity: 1;
     transform: translateY(0) scale(1);
-    will-change: transform, opacity;
     position: relative;
     animation: cardEntrance 0.6s ease-out both;
+    contain: layout style paint;
+    will-change: transform;
 }
 
 .project-card::before {
@@ -389,6 +368,7 @@
     background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
     transition: left 0.6s;
     z-index: 1;
+    will-change: transform;
 }
 
 .project-card:hover::before {
@@ -401,19 +381,31 @@
     border-color: rgba(0, 0, 0, 0.1);
 }
 
-/* Project Image - Match main page exactly */
+/* Project Image - Optimized */
 .project-image {
     position: relative;
     height: clamp(180px, 25vw, 200px);
     overflow: hidden;
+    contain: layout;
 }
 
 .project-image img {
     width: 100%;
     height: 100%;
     object-fit: cover;
-    transition: var(--transition-smooth);
+    transition: transform var(--transition-smooth);
     will-change: transform;
+    backface-visibility: hidden;
+}
+
+/* Lazy loading placeholder */
+.lazy-image {
+    background: #f0f0f0;
+    transition: opacity 0.3s ease;
+}
+
+.lazy-image[data-src] {
+    opacity: 0.7;
 }
 
 .project-card:hover .project-image img {
@@ -421,7 +413,7 @@
     filter: brightness(1.1);
 }
 
-/* Project Status Badge */
+/* Project Status Badge - Optimized */
 .project-status {
     position: absolute;
     top: 1rem;
@@ -430,7 +422,7 @@
     backdrop-filter: blur(10px);
     -webkit-backdrop-filter: blur(10px);
     padding: 0.5rem 0.75rem;
-    border-radius: var(--border-radius-xl); /* Unified */
+    border-radius: var(--border-radius-xl);
     font-size: clamp(0.75rem, 2vw, 0.85rem);
     font-weight: 600;
     display: flex;
@@ -438,6 +430,7 @@
     gap: 0.4rem;
     z-index: 3;
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    contain: layout style;
 }
 
 .project-status.working {
@@ -455,7 +448,7 @@
     font-size: 0.9em;
 }
 
-/* Project Overlay */
+/* Project Overlay - Optimized */
 .project-overlay {
     position: absolute;
     top: 0;
@@ -467,8 +460,9 @@
     align-items: center;
     justify-content: center;
     opacity: 0;
-    transition: all 0.3s ease;
+    transition: opacity 0.3s ease;
     z-index: 2;
+    will-change: opacity;
 }
 
 .project-card:hover .project-overlay {
@@ -477,18 +471,20 @@
 
 .project-overlay .btn {
     transform: translateY(20px);
-    transition: all 0.3s ease 0.1s;
+    transition: transform 0.3s ease 0.1s;
+    will-change: transform;
 }
 
 .project-card:hover .project-overlay .btn {
     transform: translateY(0);
 }
 
-/* Project Content - Match main page exactly */
+/* Project Content - Optimized */
 .project-content {
     padding: clamp(1.2rem, 3vw, 1.5rem);
     position: relative;
     z-index: 2;
+    contain: layout style;
 }
 
 .project-card:hover .project-content {
@@ -501,7 +497,7 @@
     font-weight: 600;
     margin-bottom: 0.5rem;
     color: var(--primary-color);
-    transition: var(--transition-smooth);
+    transition: all var(--transition-smooth);
     line-height: 1.3;
 }
 
@@ -514,7 +510,7 @@
     color: var(--text-secondary);
     margin-bottom: 1rem;
     line-height: 1.6;
-    transition: var(--transition-smooth);
+    transition: color var(--transition-smooth);
     font-size: var(--fs-small);
 }
 
@@ -522,7 +518,7 @@
     color: var(--text-primary);
 }
 
-/* Project Meta */
+/* Project Meta - Optimized */
 .project-meta {
     display: flex;
     justify-content: space-between;
@@ -580,45 +576,70 @@
     font-size: var(--fs-small);
 }
 
-/* Filter Animation */
+/* Filter Animation - Optimized */
 .project-card.filter-out {
     opacity: 0;
     transform: scale(0.8) translateY(20px);
     pointer-events: none;
+    will-change: transform, opacity;
 }
 
 .project-card.filter-in {
     opacity: 1;
     transform: scale(1) translateY(0);
     pointer-events: auto;
+    will-change: auto;
 }
 
-/* Animation delays for stats (staggered entrance) */
-.stat-item:nth-child(1) {
-    animation-delay: 0.5s;
+/* Animation delays for stats (staggered entrance) - Optimized */
+.stat-item:nth-child(1) { animation-delay: 0.5s; }
+.stat-item:nth-child(2) { animation-delay: 0.7s; }
+.stat-item:nth-child(3) { animation-delay: 0.9s; }
+
+/* Keyframes - Optimized */
+@keyframes slideInUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
 }
 
-.stat-item:nth-child(2) {
-    animation-delay: 0.7s;
+@keyframes cardEntrance {
+    0% {
+        opacity: 0;
+        transform: translateY(30px) scale(0.9);
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
 }
 
-.stat-item:nth-child(3) {
-    animation-delay: 0.9s;
+@keyframes fadeInScale {
+    from {
+        opacity: 0;
+        transform: translateY(40px) scale(0.95);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
 }
 
-/* Responsive Design */
+/* Responsive Design - Mobile First Approach */
 @media (max-width: 767px) {
     .mobile-menu-btn {
         display: none !important;
     }
     
-    /* Fixed mobile navigation layout */
+    /* Navigation adjustments */
     .nav-container {
-        gap: 1rem;
-    }
-    
-    .tab-links {
-        gap: 1rem;
+        gap: 0.5rem;
+        padding: 0 1rem;
     }
     
     .sort-btn span {
@@ -629,25 +650,6 @@
         min-width: 44px;
         justify-content: center;
         padding: clamp(0.4rem, 1.5vw, 0.5rem);
-    }
-    
-    /* Mobile: Show icon, hide text */
-    .login-btn {
-        padding: clamp(0.4rem, 1.5vw, 0.5rem);
-        width: 44px;
-        height: 44px;
-        border-radius: var(--border-radius-md); /* Unified squircle */
-        justify-content: center;
-        gap: 0;
-    }
-    
-    .login-icon {
-        display: block; /* Show icon */
-        font-size: 16px;
-    }
-    
-    .login-text {
-        display: none; /* Hide text */
     }
     
     /* Mobile stats layout */
@@ -679,6 +681,13 @@
     .back-btn span {
         display: block;
     }
+    
+    /* Sort menu alignment */
+    .sort-menu {
+        right: 0;
+        left: auto;
+        min-width: 140px;
+    }
 }
 
 @media (max-width: 479px) {
@@ -701,13 +710,23 @@
         font-size: clamp(1rem, 2.5vw, 1.2rem);
     }
     
-    /* Ultra mobile adjustments */
     .nav-container {
-        padding: 0 1rem;
+        padding: 0 0.5rem;
+    }
+}
+
+/* Performance optimizations for slower devices */
+@media (max-width: 480px) and (max-height: 800px) {
+    .project-card {
+        will-change: auto;
     }
     
-    .tab-links {
-        gap: 0.5rem;
+    .project-card:hover {
+        transform: translateY(-8px) scale(1.02);
+    }
+    
+    .stat-item:hover {
+        transform: translateY(-3px) scale(1.02);
     }
 }
 
@@ -716,5 +735,33 @@
     .project-status.working,
     .project-status.completed {
         background: rgba(0, 0, 0, 0.8);
+    }
+    
+    .lazy-image {
+        background: #2a2a2a;
+    }
+}
+
+/* Reduced motion support */
+@media (prefers-reduced-motion: reduce) {
+    * {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+    }
+    
+    .project-card {
+        will-change: auto;
+    }
+}
+
+/* High contrast mode support */
+@media (prefers-contrast: high) {
+    .sort-btn {
+        border: 2px solid;
+    }
+    
+    .project-card {
+        border: 2px solid var(--text-primary);
     }
 }

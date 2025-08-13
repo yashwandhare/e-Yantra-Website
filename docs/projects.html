@@ -7,21 +7,36 @@
     
     <!-- Meta Tags -->
     <meta name="description" content="Browse all projects by SVPCET Nagpur's e-Yantra Club - Working and Completed projects in robotics, AI, and embedded systems.">
+    <meta name="keywords" content="e-Yantra, robotics, AI, projects, SVPCET, engineering">
+    <meta name="author" content="SVPC e-Yantra Club">
     
-    <!-- Fonts -->
+    <!-- Performance Optimizations -->
+    <link rel="dns-prefetch" href="//fonts.googleapis.com">
+    <link rel="dns-prefetch" href="//fonts.gstatic.com">
+    <link rel="dns-prefetch" href="//cdnjs.cloudflare.com">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    
+    <!-- Critical CSS Preload -->
+    <link rel="preload" href="css/main.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+    <link rel="preload" href="css/projects.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+    <noscript>
+        <link rel="stylesheet" href="css/main.css">
+        <link rel="stylesheet" href="css/projects.css">
+    </noscript>
+    
+    <!-- Fonts with font-display: swap -->
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
     
-    <!-- Font Awesome -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Font Awesome with defer -->
+    <link rel="preload" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+    <noscript><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"></noscript>
     
-    <!-- CSS -->
-    <link rel="stylesheet" href="css/main.css">
-    <link rel="stylesheet" href="css/projects.css">
+    <!-- Preload Critical Images -->
+    <link rel="preload" href="images/projects-bg.jpg" as="image">
 </head>
 <body>
-    <!-- Navigation Tab Bar -->
+    <!-- Navigation Tab Bar - Updated Layout -->
     <header class="top-bar show" id="navbar">
         <div class="nav-container">
             <!-- Left: Back Button -->
@@ -32,42 +47,34 @@
                 </div>
             </div>
             
-            <!-- Center: Tab Menu -->
-            <nav class="tab-menu" id="tabMenu">
-                <div class="tab-links">
-                    <div class="dropdown sort-dropdown">
-                        <button class="sort-btn dropdown-toggle" id="sortBtn">
-                            <i class="fas fa-filter"></i>
-                            <span>All Projects</span>
-                            <i class="fas fa-chevron-down"></i>
-                        </button>
-                        <ul class="dropdown-menu sort-menu">
-                            <li><a href="#" data-filter="all" class="sort-option active">All Projects</a></li>
-                            <li><a href="#" data-filter="working" class="sort-option">Working</a></li>
-                            <li><a href="#" data-filter="completed" class="sort-option">Completed</a></li>
-                        </ul>
-                    </div>
-                </div>
-            </nav>
+            <!-- Center: Empty for future use -->
+            <div class="nav-center"></div>
             
-            <!-- Right: Login Button -->
-           <!-- Updated Login Button HTML -->
-            <button class="nav-link login-btn" id="loginBtn">
-                 <i class="fas fa-user login-icon"></i>
-                <span class="login-text">Login</span>
-            </button>
-
+            <!-- Right: Sort Dropdown (moved from center) -->
+            <div class="nav-right">
+                <div class="dropdown sort-dropdown">
+                    <button class="sort-btn dropdown-toggle" id="sortBtn">
+                        <i class="fas fa-filter"></i>
+                        <span>All Projects</span>
+                        <i class="fas fa-chevron-down"></i>
+                    </button>
+                    <ul class="dropdown-menu sort-menu">
+                        <li><a href="#" data-filter="all" class="sort-option active">All Projects</a></li>
+                        <li><a href="#" data-filter="working" class="sort-option">Working</a></li>
+                        <li><a href="#" data-filter="completed" class="sort-option">Completed</a></li>
+                    </ul>
+                </div>
+            </div>
         </div>
     </header>
-    
 
     <!-- Main Content -->
     <main class="projects-main">
         <!-- Page Header with Background Image -->
         <section class="projects-header">
-            <!-- Background Image -->
+            <!-- Background Image with Intersection Observer -->
             <div class="projects-hero-bg">
-                <img src="images/projects-bg.jpg" alt="Projects Background">
+                <img src="images/projects-bg.jpg" alt="Projects Background" loading="eager" decoding="async">
             </div>
             
             <!-- Header Content -->
@@ -98,21 +105,26 @@
             <div class="container">
                 <!-- Loading State -->
                 <div class="loading-state" id="loadingState">
-                    <div class="loading-spinner"></div>
+                    <div class="loading-spinner" aria-label="Loading projects"></div>
                     <p>Loading projects...</p>
                 </div>
 
                 <!-- Projects Grid -->
                 <div class="projects-grid" id="projectsGrid">
                     <!-- Working Projects -->
-                    <div class="project-card" data-status="working">
+                    <article class="project-card" data-status="working">
                         <div class="project-image">
-                            <img src="images/projects/autonomous-robot.jpg" alt="Autonomous Navigation Robot" loading="lazy">
+                            <img data-src="images/projects/autonomous-robot.jpg" 
+                                 src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 400 200'%3E%3Crect fill='%23f0f0f0'/%3E%3C/svg%3E" 
+                                 alt="Autonomous Navigation Robot" 
+                                 loading="lazy" 
+                                 decoding="async"
+                                 class="lazy-image">
                             <div class="project-overlay">
-                                <button class="btn btn-small">View Details</button>
+                                <button class="btn btn-small" type="button">View Details</button>
                             </div>
                             <div class="project-status working">
-                                <i class="fas fa-cog fa-spin"></i>
+                                <i class="fas fa-cog fa-spin" aria-hidden="true"></i>
                                 <span>In Progress</span>
                             </div>
                         </div>
@@ -128,16 +140,21 @@
                                 <div class="project-date">Started: Jan 2024</div>
                             </div>
                         </div>
-                    </div>
+                    </article>
 
-                    <div class="project-card" data-status="completed">
+                    <article class="project-card" data-status="completed">
                         <div class="project-image">
-                            <img src="images/projects/iot-system.jpg" alt="Smart Campus IoT System" loading="lazy">
+                            <img data-src="images/projects/iot-system.jpg" 
+                                 src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 400 200'%3E%3Crect fill='%23f0f0f0'/%3E%3C/svg%3E" 
+                                 alt="Smart Campus IoT System" 
+                                 loading="lazy" 
+                                 decoding="async"
+                                 class="lazy-image">
                             <div class="project-overlay">
-                                <button class="btn btn-small">View Details</button>
+                                <button class="btn btn-small" type="button">View Details</button>
                             </div>
                             <div class="project-status completed">
-                                <i class="fas fa-check-circle"></i>
+                                <i class="fas fa-check-circle" aria-hidden="true"></i>
                                 <span>Completed</span>
                             </div>
                         </div>
@@ -153,16 +170,21 @@
                                 <div class="project-date">Completed: Dec 2023</div>
                             </div>
                         </div>
-                    </div>
+                    </article>
 
-                    <div class="project-card" data-status="working">
+                    <article class="project-card" data-status="working">
                         <div class="project-image">
-                            <img src="images/projects/drone-project.jpg" alt="Agricultural Drone System" loading="lazy">
+                            <img data-src="images/projects/drone-project.jpg" 
+                                 src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 400 200'%3E%3Crect fill='%23f0f0f0'/%3E%3C/svg%3E" 
+                                 alt="Agricultural Drone System" 
+                                 loading="lazy" 
+                                 decoding="async"
+                                 class="lazy-image">
                             <div class="project-overlay">
-                                <button class="btn btn-small">View Details</button>
+                                <button class="btn btn-small" type="button">View Details</button>
                             </div>
                             <div class="project-status working">
-                                <i class="fas fa-cog fa-spin"></i>
+                                <i class="fas fa-cog fa-spin" aria-hidden="true"></i>
                                 <span>In Progress</span>
                             </div>
                         </div>
@@ -178,13 +200,13 @@
                                 <div class="project-date">Started: Mar 2024</div>
                             </div>
                         </div>
-                    </div>
+                    </article>
                 </div>
 
                 <!-- No Results State -->
                 <div class="no-results" id="noResults" style="display: none;">
                     <div class="no-results-content">
-                        <i class="fas fa-search"></i>
+                        <i class="fas fa-search" aria-hidden="true"></i>
                         <h3>No projects found</h3>
                         <p>Try adjusting your filter to see more projects.</p>
                     </div>
@@ -193,52 +215,12 @@
         </section>
     </main>
 
-    <!-- Login Modal -->
-    <div class="modal-overlay" id="loginModal">
-        <div class="modal-container">
-            <div class="modal-card">
-                <div class="modal-header">
-                    <h2>Member Login</h2>
-                    <button class="modal-close" id="modalClose" aria-label="Close">
-                        <i class="fas fa-times"></i>
-                    </button>
-                </div>
-                <div class="modal-content">
-                    <form class="login-form" id="loginForm">
-                        <div class="form-group">
-                            <label for="username">Username</label>
-                            <input type="text" id="username" name="username" required autocomplete="username" placeholder="Enter your username">
-                            <i class="fas fa-user input-icon"></i>
-                        </div>
-                        <div class="form-group">
-                            <label for="password">Password</label>
-                            <input type="password" id="password" name="password" required autocomplete="current-password" placeholder="Enter your password">
-                            <i class="fas fa-lock input-icon"></i>
-                            <button type="button" class="password-toggle" id="passwordToggle">
-                                <i class="fas fa-eye"></i>
-                            </button>
-                        </div>
-                        <div class="form-actions">
-                            <button type="submit" class="btn btn-primary login-submit-btn" id="loginSubmit">
-                                <span>Login</span>
-                                <i class="fas fa-spinner loading-icon"></i>
-                            </button>
-                        </div>
-                        <div class="form-footer">
-                            <a href="#" class="forgot-password" id="forgotPassword">Forgot Password?</a>
-                        </div>
-                    </form>
-                </div>
-            </div>
-        </div>
-    </div>
-
     <!-- Footer -->
     <footer class="footer">
         <div class="container">
             <div class="footer-top">
                 <div class="footer-logo">
-                    <i class="fas fa-robot"></i>
+                    <i class="fas fa-robot" aria-hidden="true"></i>
                     SVPC e-Yantra
                 </div>
             </div>
@@ -262,8 +244,8 @@
                     <div class="contact-section">
                         <h4>Connect With Us</h4>
                         <div class="contact-info">
-                            <p><span>eyantra@svpcet.ac.in</span><i class="fas fa-envelope"></i></p>
-                            <p><span>SVPCET, Nagpur, Maharashtra</span><i class="fas fa-map-marker-alt"></i></p>
+                            <p><span>eyantra@svpcet.ac.in</span><i class="fas fa-envelope" aria-hidden="true"></i></p>
+                            <p><span>SVPCET, Nagpur, Maharashtra</span><i class="fas fa-map-marker-alt" aria-hidden="true"></i></p>
                         </div>
                         <div class="social-links">
                             <a href="#" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
@@ -280,7 +262,27 @@
         </div>
     </footer>
 
-    <script src="js/main.js"></script>
-    <script src="js/projects.js"></script>
+    <!-- Scripts with performance optimization -->
+    <script>
+        // Inline critical JS for immediate execution
+        (function() {
+            // Add loaded class to trigger CSS animations
+            window.addEventListener('load', function() {
+                document.querySelector('.projects-grid').classList.add('loaded');
+            });
+            
+            // Basic lazy loading fallback
+            if (!('IntersectionObserver' in window)) {
+                var lazyImages = document.querySelectorAll('.lazy-image');
+                lazyImages.forEach(function(img) {
+                    img.src = img.dataset.src;
+                });
+            }
+        })();
+    </script>
+    
+    <!-- Defer non-critical scripts -->
+    <script src="js/main.js" defer></script>
+    <script src="js/projects.js" defer></script>
 </body>
 </html>
